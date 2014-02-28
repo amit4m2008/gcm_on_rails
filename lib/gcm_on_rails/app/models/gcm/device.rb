@@ -11,18 +11,21 @@
 class Gcm::Device < Gcm::Base
   self.table_name = "gcm_devices"
 
-  attr_accessible :registration_id, :android_id, :user_id, :logged_in
+  #attr_accessible :registration_id, :android_id, :user_id, :logged_in
 
   has_many :notifications, :class_name => 'Gcm::Notification', :dependent => :destroy
-  validates_presence_of :registration_id
-  validates_uniqueness_of :registration_id
+  #validates_presence_of :registration_id
+  #validates_uniqueness_of :registration_id
+  
+  validates :registration_id, presence: true
+  validates :registration_id, uniqueness: true
 
   before_save :set_last_registered_at
 
   # The <tt>feedback_at</tt> accessor is set when the
   # device is marked as potentially disconnected from your
   # application by Google.
-  attr_accessor :feedback_at
+  #attr_accessor :feedback_at
 
   private
   def set_last_registered_at
